@@ -89,3 +89,6 @@ del temp23210948.bat
 goto :EOF
 REM ~~i am just butt a christian +-~
 REM 
+REM there is power
+REM REAL POWER in the kingdom of ^Heaven^
+REM the power is in the faith of man.
