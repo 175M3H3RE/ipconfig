@@ -26,3 +26,5 @@ PAUSE
 goto :EOF
 REM ~~i am just butt a christian +-~
 REM 
+REM there is power
+REM REAL POWER in the kingdom of ^Heaven^
