@@ -13,14 +13,28 @@ if "X%template%X" NEQ "XX" echo %number%.%template%
 :india
 Exit /B
 :choice
-set /p Whatt=Enter a choice:
+set /p Whatt=Enter choice:
 set /a number_of_desire=Whatt-1
 echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %Whatt% LSS 1  echo.No exists&goto choice
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
 if "%template%"=="" echo.No exists&goto choice
-netsh interface ipv4 show addresses name="%template%"
-for /f "tokens=*" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
+
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:" ') do set dhcpis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "IP Address:" ') do set ipis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Default Gateway:" ') do set gateis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Subnet Prefix:" ') do set subnetis=%%i
+echo.------------------------------
+echo.Hello,
+if defined ipis echo.%ipis%
+if defined gateis echo.%gateis%
+if defined subnetis echo.%subnetis%
+echo.------------------------------
+echo DHCP Status,&echo.%dhcpis%
+
+
+
+for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
 if "%string%"=="xYesx" echo GOTCHA! & echo. Make static?
 if "%string%"=="xNox"  echo. Make dynamic?
 choice /c YN /m "Say:"
@@ -88,6 +102,7 @@ del temp302923.vbs
 del temp23210948.bat
 goto :EOF
 REM ~~i am just butt a christian +-~
+
 REM 
 REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
