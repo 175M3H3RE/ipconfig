@@ -47,27 +47,27 @@ choice /c YN /m "Say:"
 set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
 if "%error%"=="1" if "%string%"=="xNox"  goto dynamicconfiguration
-del temp302923.vbs
-del temp23210948.bat
+del xxxxxxxxxx0931092.vbs
+del temps23210948.bat
 goto :EOF
 
 :dynamicconfiguration
 
 
 
-echo mode 60,7 ^&color B5^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" source=dhcp  > temp23210948.bat
-echo.netsh -c interface ipv4 set address name="%template%" source=dhcp  >> temp23210948.bat
-echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temp23210948.bat
+echo mode 60,7 ^&color B5^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" source=dhcp  > temps23210948.bat
+echo.netsh -c interface ipv4 set address name="%template%" source=dhcp  >> temps23210948.bat
+echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
-if exist temp23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temp23210948.bat') do set file_nameis=%%i
+if exist temps23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temps23210948.bat') do set file_nameis=%%i
 
-echo Set objShell = CreateObject("Shell.Application") >temp302923.vbs
-echo Set FSO = CreateObject("Scripting.FileSystemObject") >>temp302923.vbs 
-echo objShell.ShellExecute "cmd", "/c " ^& Chr(34) ^& "%file_nameis%" ^& Chr(34) , "", "runas" >>temp302923.vbs
-wscript "temp302923.vbs" 
+echo Set objShell = CreateObject("Shell.Application") >xxxxxxxxxx0931092.vbs
+echo Set FSO = CreateObject("Scripting.FileSystemObject") >>xxxxxxxxxx0931092.vbs 
+echo objShell.ShellExecute "cmd", "/c " ^& Chr(34) ^& "%file_nameis%" ^& Chr(34) , "", "runas" >>xxxxxxxxxx0931092.vbs
+wscript "xxxxxxxxxx0931092.vbs" 
 timeout 2 
-del temp302923.vbs
-del temp23210948.bat
+del xxxxxxxxxx0931092.vbs
+del temps23210948.bat
 goto :EOF
 
 
@@ -84,19 +84,19 @@ echo %gate%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$
 echo.Done!
 echo.Setting in motion..&timeout 1 >NUL&echo|set /p=Running as Administrative priveleges...
 
-echo mode 60,7 ^&color B5^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" static %ip% %subnet% %gate% > temp23210948.bat
-echo.netsh -c interface ipv4 set address name="%template%" static %ip% %subnet% %gate%  >> temp23210948.bat
-echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temp23210948.bat
+echo mode 60,7 ^&color B5^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" static %ip% %subnet% %gate% > temps23210948.bat
+echo.netsh -c interface ipv4 set address name="%template%" static %ip% %subnet% %gate%  >> temps23210948.bat
+echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
-if exist temp23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temp23210948.bat') do set file_nameis=%%i
+if exist temps23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temps23210948.bat') do set file_nameis=%%i
 
-echo Set objShell = CreateObject("Shell.Application") >temp302923.vbs
-echo Set FSO = CreateObject("Scripting.FileSystemObject") >>temp302923.vbs 
-echo objShell.ShellExecute "cmd", "/c " ^& Chr(34) ^& "%file_nameis%" ^& Chr(34) , "", "runas" >>temp302923.vbs 
+echo Set objShell = CreateObject("Shell.Application") >xxxxxxxxxx0931092.vbs
+echo Set FSO = CreateObject("Scripting.FileSystemObject") >>xxxxxxxxxx0931092.vbs 
+echo objShell.ShellExecute "cmd", "/c " ^& Chr(34) ^& "%file_nameis%" ^& Chr(34) , "", "runas" >>xxxxxxxxxx0931092.vbs 
 
 
 
-wscript "temp302923.vbs"
+wscript "xxxxxxxxxx0931092.vbs"
 
 
 
@@ -104,8 +104,8 @@ wscript "temp302923.vbs"
 
 timeout 2
 
-del temp302923.vbs
-del temp23210948.bat
+del xxxxxxxxxx0931092.vbs
+del temps23210948.bat
 goto :EOF
 REM ~~i am just butt a christian +-~
 REM REM there is power
