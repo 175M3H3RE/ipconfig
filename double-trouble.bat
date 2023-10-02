@@ -14,10 +14,14 @@ if "X%template%X" NEQ "XX" echo %number%.%template%
 Exit /B
 :choice
 echo.
-set /p Whatt=_
-set /a number_of_desire=Whatt-1
-echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
-if %Whatt% LSS 1  echo.No exists&goto choice
+REM set /p Whatt=_
+choice /c 1234567890 /n /M "?"
+set error_received=%errorlevel%
+if %error_received%==10 (set /a whatt=10 ) else (set /a whatt=%error_received%)
+set /a number_of_desire=whatt-1
+
+REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
+if %whatt% LSS 1  echo.No exists&goto choice
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
 if "%template%"=="" echo.No exists&goto choice
 title %template%
@@ -103,10 +107,7 @@ timeout 2
 del temp302923.vbs
 del temp23210948.bat
 goto :EOF
-
 REM ~~i am just butt a christian +-~
-
-REM 
-REM there is power
+REM REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
 REM the power is in the faith of man.
