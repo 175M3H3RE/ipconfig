@@ -1,8 +1,6 @@
 @echo off & title Ikea Network Switcher
 REM You ll get What you pay for.
 REM REMember that.
-
-
  set colors=
  set /a switch=0
  set /a juggersommer=-1
@@ -89,7 +87,7 @@ if "%string%"=="xNox"  echo.&echo|set/p=Y^=Switch to a dynamic configuration, E^
 
 
 echo.&echo.
-choice /c YNEC /m "Say:          "
+choice /c YNEC /m " . ?" /N
 set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
 if "%error%"=="1" if "%string%"=="xNox"  goto dynamicconfiguration
@@ -104,7 +102,7 @@ if defined ipis echo.[Copied Ip Address!] %ipthing%&echo.&echo.Hit a Key!&echo.%
 if defined gateis for /f "tokens=3" %%i in ("%gateis%") do set gatething=%%i
 if defined gateis echo.[Copied Gateway!] %gatething%&echo.&echo.Hit a key!&echo.%gatething%|clip&PAUSE >NUL
 if defined subnetis for /f "tokens=5 delims=() " %%i in ("%subnetis%") do set mask=%%i
-if defined gateis echo.[Subnet Copied!] %mask%&echo.%mask%|clip
+if defined gateis echo.[Copied Subnet!] %mask%&echo.%mask%|clip
 :terminate
 del xxxxxxxxxx0931092.vbs 2>nul
 del temps23210948.bat 2>nul
