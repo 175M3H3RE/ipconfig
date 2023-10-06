@@ -2,6 +2,9 @@
 REM You ll get What you pay for.
 REM REMember that.
 REM Remember me.
+@echo off & title Ikea Network Switcher
+goto begin
+:begin
  set colors=
  
  set /a juggersommer=-1
@@ -39,7 +42,7 @@ if %switch%==1 goto skip
 set colos=%~1
 color %colos%
 echo. This is Sample Text. Brown Fox jumps over the Wild-assed Snakeish scum.
-choice /c YNEBCDAFGHIJKLMOPQRSTUVWXZ /m "Press any Alphabet key. Y to save color=%colors%" /n 
+choice /c YNEBCDAFGHIJKLMOPQRSTUVWXZ /m "Press any Alphabet key. Y to save color=%colos%" /n 
 set /a errorology=%errorlevel%
 if %errorology%==1 echo.%colos% >colors-29017739820942.conf&set /a switch=1
 if %errorology%==3 set /a switch=1
@@ -88,12 +91,22 @@ for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%"
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "IP Address:" ') do set ipis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Default Gateway:" ') do set gateis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Subnet Prefix:" ') do set subnetis=%%i
-echo.----------------------------------------------------------------
-echo.Hello,
-if defined ipis echo.%ipis%
-if defined gateis echo.%gateis%
-if defined subnetis echo.%subnetis%
-echo.----------------------------------------------------------------
+echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+call :string_counter "%dhcpis%"
+
+call :string_counter "%ipis%"
+
+call :string_counter "%gateis%"
+
+call :string_counter "%subnetis%"
+echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+echo.     ----------------------------------------------------------------
+echo.    ^|Hello,                                                          ^|
+echo.    ^|The settings as defined above are for you to see.               ^|
+echo.    ^|Don't be agravated by them.                                     ^|
+echo.    ^|In the name of the Lord, Arise!                                 ^|
+echo.     ----------------------------------------------------------------
 echo DHCP Status&echo.%dhcpis%
 
 
@@ -101,16 +114,18 @@ echo DHCP Status&echo.%dhcpis%
 for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
 if "%string%"=="xYesx" echo.&echo|set/p=[Y/E]^=Make it a Static Configuration, C^=Copy Addreses to Clipboard
 if "%string%"=="xNox"  echo.&echo|set/p=Y^=Switch to a dynamic configuration, E^=Edit Configuration, C^=Copy Addreses to Clipboard
-
+echo.&echo.X=go Back
 
 echo.&echo.
-choice /c YNEC /m " . ?" /N
+choice /c YNECX /m " . ?" /N
 set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
 if "%error%"=="1" if "%string%"=="xNox"  goto dynamicconfiguration
 if "%error%"=="3" if "%string%"=="xNox"  goto staticonfiguration 
 if "%error%"=="3" goto carry_on
 if "%error%"=="4" goto copied
+if "%error%"=="5"  goto carry_on
+
 goto terminate
 :copied
 echo.&echo.Press a key to copy!&pause >NUL
@@ -182,8 +197,27 @@ timeout 2
 del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
+:string_counter
+setlocal enabledelayedexpansion
+set /a heyhey=100
+set string=%~1
+set /a tount=0
+for /l %%i in (0,1,150) do set temp=!string:~%%i,1!&set /a tount+=1&if "z!temp!z"=="zz" goto nt
+:nt
+set /a tount=tount-1
+
+set /a leftover=heyhey-tount
+
+REM White Space Sensitive code
+set space= 
+for /l %%i in (1,1,!leftover!) do set space= !space!
+echo.|set/p=x%string%!space!X
+echo.
+Endlocal
+Exit /B
 REM ~~i am just butt a christian +-~
 REM   butt is the key word here 
+REM The bride and the bridegroom.
 REM REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
 REM the power is in the faith of man.
