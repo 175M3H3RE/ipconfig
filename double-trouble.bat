@@ -166,7 +166,7 @@ del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
 REM ~~i am just butt a christian +-~
-REM   butt is the key word here 
+REM butt is the key word here 
 REM REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
 REM the power is in the faith of man.
