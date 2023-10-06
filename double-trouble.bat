@@ -1,34 +1,51 @@
 @echo off & title Ikea Network Switcher
 REM You ll get What you pay for.
 REM REMember that.
+REM Remember me.
  set colors=
- set /a switch=0
+ 
  set /a juggersommer=-1
  set /a gotowhere=0
-if exist "computer colors list.txt" for /f "delims=" %%I in ('type "computer colors list.txt"') do set /a juggersommer+=1
 if exist colors-29017739820942.conf title Welcome!
 if exist colors-29017739820942.conf for /f "delims=" %%i in (colors-29017739820942.conf) do set colors=%%i
 color %colors%
 goto carry_on
 :themes
 CLS
-if NOT exist "computer colors list.txt" echo. Please download "computer colors list.txt" from the github repository.&pause >NUL&goto carry_on 
-for /l %%i in (1,1,%juggersommer%) do CALL :colorit %%i
+setlocal enabledelayedexpansion
+title Themes!
+echo.Press E to Exit
+set /a switch=0
+REM Something
+set colorlist=^
+
+
+REM Something
+REM To Add Colors Add a line--> set color#=4c
+REM Where 4c is example color code
+REM And change variable colors to reflect additional color variable like
+REM set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!
+
+set color1=47
+set color2=02
+set color3=06
+set color4=07
+set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!
+for /f "delims=" %%i in ("!colors!") do CALL :colorit %%i
 if %switch% NEQ 1 goto themes
 if %switch%==1 goto carry_on
 :colorit
 if %switch%==1 goto skip
-set /a juggernaut=%~1
-for /f "skip=%juggernaut% delims=" %%I in ('type "computer colors list.txt"') do for /f "tokens=1" %%A in ("%%I") do set colors=%%A&goto NEXT
-:NEXT
-color %colors%
+set colos=%~1
+color %colos%
 echo. This is Sample Text. Brown Fox jumps over the Wild-assed Snakeish scum.
 choice /c YNEBCDAFGHIJKLMOPQRSTUVWXZ /m "Press any Alphabet key. Y to save color=%colors%" /n 
 set /a errorology=%errorlevel%
-if %errorology%==1 echo.%colors% >colors-29017739820942.conf&set /a switch=1
+if %errorology%==1 echo.%colos% >colors-29017739820942.conf&set /a switch=1
 if %errorology%==3 set /a switch=1
 :skip
 Exit /B
+endlocal
 :carry_on
 echo. Welcome...
 ping -n 1 localhost 1>NUL
@@ -166,7 +183,7 @@ del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
 REM ~~i am just butt a christian +-~
-REM butt is the key word here 
+REM   butt is the key word here 
 REM REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
 REM the power is in the faith of man.
