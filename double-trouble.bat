@@ -83,10 +83,11 @@ echo DHCP Status&echo.%dhcpis%
 
 
 for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
-if "%string%"=="xYesx" echo.&echo. Make static?
-if "%string%"=="xNox"  echo.&echo. Make dynamic?
-echo.               [E to Edit Mode]
-echo.               [Press C to Copy]
+if "%string%"=="xYesx" echo.&echo|set/p=Y^= static,
+if "%string%"=="xNox"  echo.&echo|set/p=Y^= dynamic,
+echo|set/p= E^=Edit Configuration,
+echo|set/p= C^=Copy Addreses to Clipboard,
+echo.&echo.
 choice /c YNEC /m "Say:          "
 set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
@@ -96,15 +97,17 @@ if "%error%"=="3" goto carry_on
 if "%error%"=="4" goto copied
 goto terminate
 :copied
+echo.&echo.Press a key to copy!&pause >NUL
 if defined ipis for /f "tokens=3" %%i in ("%ipis%") do set ipthing=%%i
-if defined ipis echo.[Copied Ip Address!] %ipthing%&echo.&echo.Hit a Key! to copy Gateway&echo.%ipthing%|clip&PAUSE >NUL
+if defined ipis echo.[Copied Ip Address!] %ipthing%&echo.&echo.Hit a Key!&echo.%ipthing%|clip&PAUSE >NUL
 if defined gateis for /f "tokens=3" %%i in ("%gateis%") do set gatething=%%i
-if defined gateis echo.[Copied Gateway!] %gatething%&echo.&echo.Hit a key! to copy the subnet&echo.%gatething%|clip&PAUSE >NUL
+if defined gateis echo.[Copied Gateway!] %gatething%&echo.&echo.Hit a key!&echo.%gatething%|clip&PAUSE >NUL
 if defined subnetis for /f "tokens=5 delims=() " %%i in ("%subnetis%") do set mask=%%i
-if defined gateis echo.Subnet Copied: %mask%&echo. Please close Window.&echo.%mask%|clip&PAUSE >NUL
+if defined gateis echo.[Subnet Copied!] %mask%&echo.%mask%|clip
 :terminate
-del xxxxxxxxxx0931092.vbs
-del temps23210948.bat
+del xxxxxxxxxx0931092.vbs 2>nul
+del temps23210948.bat 2>nul
+for /l %%i in (1,1,20) do echo.&echo.&PAUSE >NUL
 goto :EOF
 
 :dynamicconfiguration
@@ -163,6 +166,7 @@ timeout 2
 del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
+
 
 REM ~~i am just butt a christian +-~
 REM REM there is power
