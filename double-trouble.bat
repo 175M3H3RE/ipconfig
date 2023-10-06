@@ -1,6 +1,7 @@
 @echo off & title Ikea Network Switcher
 REM You ll get What you pay for.
 REM REMember that.
+
  set colors=
  set /a switch=0
  set /a juggersommer=-1
@@ -32,7 +33,7 @@ Exit /B
 :carry_on
 echo. Welcome...
 ping -n 1 localhost 1>NUL
-if NOT exist colors-29017739820942.conf echo. Don't Freak Out I feel for ya.
+if NOT exist colors-29017739820942.conf echo. Don't Freak Out I feel for (all of) ya.
 if NOT exist colors-29017739820942.conf ping -n 2 localhost 1>NUL
 title Ikea Network Switcher
 CLS
@@ -58,10 +59,11 @@ choice /c 1234567890 /n /M "?"
 set error_received=%errorlevel%
 if %error_received%==10 (set /a whatt=10 ) else (set /a whatt=%error_received%)
 set /a number_of_desire=whatt-1
-
+set /a somebot=counter+3
 REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %whatt% LSS 1  echo.No exists&goto choice
 if %whatt%==%total% SET /A SWITCH=0&goto themes
+if %whatt%==%somebot% start cmd /c "%~fp0"
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
 if "%template%"=="" echo.No exists&goto choice
 title %template%
@@ -90,7 +92,7 @@ set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
 if "%error%"=="1" if "%string%"=="xNox"  goto dynamicconfiguration
 if "%error%"=="3" if "%string%"=="xNox"  goto staticonfiguration 
-if "%error%"=="3" goto Choice
+if "%error%"=="3" goto carry_on
 if "%error%"=="4" goto copied
 goto terminate
 :copied
@@ -129,12 +131,12 @@ goto :EOF
 :no_good
 set /p ip=Enter IP ****
 echo %ip%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$"&&echo.Got it! || echo.no_good&&goto no_good
-:not_really
-set /p subnet=Enter subnet ***
-echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$"&&echo.Got it! || echo.no_good&&goto not_really
 :no_t
 set /p gate=Enter gate IP address **
 echo %gate%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$"&&echo.Got it! || echo.no_good&&goto no_t
+:not_really
+set /p subnet=Enter subnet ***
+echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$"&&echo.Got it! || echo.no_good&&goto not_really
 echo.Done!
 echo.Setting in motion..&timeout 1 >NUL&echo|set /p=Running as Administrative priveleges...
 
