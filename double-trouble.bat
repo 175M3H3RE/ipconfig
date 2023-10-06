@@ -2,6 +2,7 @@
 REM You ll get What you pay for.
 REM REMember that.
 
+
  set colors=
  set /a switch=0
  set /a juggersommer=-1
@@ -83,10 +84,10 @@ echo DHCP Status&echo.%dhcpis%
 
 
 for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
-if "%string%"=="xYesx" echo.&echo|set/p=Y^= static,
-if "%string%"=="xNox"  echo.&echo|set/p=Y^= dynamic,
-echo|set/p= E^=Edit Configuration,
-echo|set/p= C^=Copy Addreses to Clipboard,
+if "%string%"=="xYesx" echo.&echo|set/p=[Y/E]^=Make it a Static Configuration, C^=Copy Addreses to Clipboard
+if "%string%"=="xNox"  echo.&echo|set/p=Y^=Switch to a dynamic configuration, E^=Edit Configuration, C^=Copy Addreses to Clipboard
+
+
 echo.&echo.
 choice /c YNEC /m "Say:          "
 set /a error=%errorlevel%
@@ -166,9 +167,8 @@ timeout 2
 del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
-
-
 REM ~~i am just butt a christian +-~
+REM   butt is the key word here 
 REM REM there is power
 REM REAL POWER in the kingdom of ^Heaven^
 REM the power is in the faith of man.
