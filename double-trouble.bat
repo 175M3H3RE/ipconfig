@@ -94,7 +94,13 @@ for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%"
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "IP Address:" ') do set ipis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Default Gateway:" ') do set gateis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Subnet Prefix:" ') do set subnetis=%%i
-echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
+
+
+
+if "%string%"=="xNox" echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxit's  a static configurationxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+if "%string%"=="xYesx"  echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxit's  dynamic configurationxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 call :string_counter "%dhcpis%"
 
 call :string_counter "%ipis%"
@@ -102,22 +108,20 @@ call :string_counter "%ipis%"
 call :string_counter "%gateis%"
 
 call :string_counter "%subnetis%"
-echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+                      echo.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxthat's all folks !xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+echo.
 echo.     ----------------------------------------------------------------
-echo.    ^|Hello,                                                          ^|
+echo.    ^|Hello Dear Buddy,                                               ^|
 echo.    ^|The settings as defined above are for you to see.               ^|
 echo.    ^|Don't be agravated by them.                                     ^|
 echo.    ^|In the name of the Lord, Arise^!                                 ^|
 echo.     ----------------------------------------------------------------
-echo DHCP Status&echo.%dhcpis%
+REM echo. DHCP Status&echo.%dhcpis%
 
+if "%string%"=="xYesx" echo.&echo|set/p=[Y/E]^=Make it a Static Configuration, C^=Copy Addreses to Clipboard, X^=go Back
+if "%string%"=="xNox"  echo.&echo|set/p=Y^=Switch to a dynamic configuration, E^=Edit Configuration, C^=Copy Addreses to Clipboard, X^=go Back
+echo.&echo.
 
-
-for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
-if "%string%"=="xYesx" echo.&echo|set/p=[Y/E]^=Make it a Static Configuration, C^=Copy Addreses to Clipboard
-if "%string%"=="xNox"  echo.&echo|set/p=Y^=Switch to a dynamic configuration, E^=Edit Configuration, C^=Copy Addreses to Clipboard
-echo.&echo.X=go Back
 
 echo.&echo.
 choice /c YNECX /m " . ?" /N
@@ -306,7 +310,8 @@ goto loop3
 for /f "tokens=4 delims=: " %%i in ("%subnetmask%") do set subnet=%%i
 echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$" >NUL&&echo. >NUL || echo.no_good&&goto loop3
 echo %subnet%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digits in Ip&goto loop3)
-pause
+echo.
+pause >NUL
 goto doit
 goto :EOF
 :string_counter
