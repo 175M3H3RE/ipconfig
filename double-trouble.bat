@@ -2,7 +2,7 @@
 REM You ll get What you pay for.
 REM REMember that.
 REM Remember me.
-@echo off & title Ikea Network Switcher
+
 goto begin
 :begin
  set colors=
@@ -24,10 +24,10 @@ set colorlist=^
 
 
 REM Something
-REM To Add Colors Add a line--> set color#=4c
+REM To Add Colors Add a line--> set color5=4c
 REM Where 4c is example color code
 REM And change variable colors to reflect additional color variable like
-REM set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!
+REM set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!!colorlist!!color5!
 
 set color1=47
 set color2=02
@@ -36,7 +36,7 @@ set color4=07
 set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!
 for /f "delims=" %%i in ("!colors!") do CALL :colorit %%i
 if %switch% NEQ 1 goto themes
-if %switch%==1 goto carry_on
+if %switch%==1 Endlocal&Exit /B
 :colorit
 if %switch%==1 goto skip
 set colos=%~1
@@ -48,7 +48,6 @@ if %errorology%==1 echo.%colos% >colors-29017739820942.conf&set /a switch=1
 if %errorology%==3 set /a switch=1
 :skip
 Exit /B
-endlocal
 :carry_on
 echo. Welcome...
 ping -n 1 localhost 1>NUL
@@ -81,12 +80,16 @@ set /a number_of_desire=whatt-1
 set /a somebot=counter+3
 REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %whatt% LSS 1  echo.No exists&goto choice
-if %whatt%==%total% SET /A SWITCH=0&goto themes
+if %whatt%==%total% SET /A SWITCH=0&CALL :themes&goto Carry_on
 if %whatt%==%somebot% start cmd /c "%~fp0"
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
 if "%template%"=="" echo.No exists&goto choice
 title %template%
 CLS
+SET dhcpis=
+set ipis=
+set gateis=
+set subnetis=
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:" ') do set dhcpis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "IP Address:" ') do set ipis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Default Gateway:" ') do set gateis=%%i
@@ -105,7 +108,7 @@ echo.     ----------------------------------------------------------------
 echo.    ^|Hello,                                                          ^|
 echo.    ^|The settings as defined above are for you to see.               ^|
 echo.    ^|Don't be agravated by them.                                     ^|
-echo.    ^|In the name of the Lord, Arise!                                 ^|
+echo.    ^|In the name of the Lord, Arise^!                                 ^|
 echo.     ----------------------------------------------------------------
 echo DHCP Status&echo.%dhcpis%
 
@@ -121,7 +124,7 @@ choice /c YNECX /m " . ?" /N
 set /a error=%errorlevel%
 if "%error%"=="1" if "%string%"=="xYesx" goto staticonfiguration
 if "%error%"=="1" if "%string%"=="xNox"  goto dynamicconfiguration
-if "%error%"=="3" if "%string%"=="xNox"  goto staticonfiguration 
+if "%error%"=="3" if "%string%"=="xNox"  goto editer 
 if "%error%"=="3" goto carry_on
 if "%error%"=="4" goto copied
 if "%error%"=="5"  goto carry_on
@@ -138,8 +141,12 @@ if defined gateis echo.[Copied Subnet!] %mask%&echo.%mask%|clip
 :terminate
 del xxxxxxxxxx0931092.vbs 2>nul
 del temps23210948.bat 2>nul
-for /l %%i in (1,1,20) do echo.&echo.&PAUSE >NUL
+for /l %%i in (1,1,20) do echo.&echo.&call :choose
 goto :EOF
+:choose
+choice /c yR /m " Try Again?" /N 
+if %errorlevel%==1 goto copied
+Exit /B
 
 :dynamicconfiguration
 
@@ -171,6 +178,7 @@ echo %gate%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$
 :not_really
 set /p subnet=Enter subnet ***
 echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$"&&echo.Got it! || echo.no_good&&goto not_really
+:doit
 echo.Done!
 echo.Setting in motion..&timeout 1 >NUL&echo|set /p=Running as Administrative priveleges...
 
@@ -197,24 +205,129 @@ timeout 2
 del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
+:editer
+title Press S to Save
+if defined ipis for /f "tokens=3" %%i in ("%ipis%") do set ipthing=%%i
+if defined gateis for /f "tokens=3" %%i in ("%gateis%") do set gatething=%%i
+if defined subnetis for /f "tokens=5 delims=() " %%i in ("%subnetis%") do set mask=%%i
+if not defined ipthing set ipthing=
+set ipstring=Enter IP:             %ipthing%
+CLS
+echo|set /p=%ipstring%
+:loop1
+choice /c 1234567890xdsp >NUL
+set error=%errorlevel%
+if %error%==1 set ipstring=%ipstring%1
+if %error%==2 set ipstring=%ipstring%2
+if %error%==3 set ipstring=%ipstring%3
+if %error%==4 set ipstring=%ipstring%4
+if %error%==5 set ipstring=%ipstring%5
+if %error%==6 set ipstring=%ipstring%6
+if %error%==7 set ipstring=%ipstring%7
+if %error%==8 set ipstring=%ipstring%8
+if %error%==9 set ipstring=%ipstring%9
+if %error%==10 set ipstring=%ipstring%0
+if %error%==11 set ipstring=%ipstring%.
+if %error%==12 if "%ipstring%" NEQ "Enter IP:             " set ipstring=%ipstring:~0,-1%
+if %error%==13 goto x1
+if %error%==14 goto carry_on
+cls
+echo|set/p=%ipstring%                        
+echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+goto loop1
+:x1
+for /f "tokens=3 delims=: " %%i in ("%ipstring%") do set ip=%%i
+echo x%ip%x
+echo %ip%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$" >NUL&&echo. >NUL || echo.no_good&&goto loop1
+echo %ip%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digits in Ip&goto loop1)
+
+if not defined gatething set gatething=
+set gatestring=Enter Gateway:        %gatething%
+CLS
+echo.%ipstring%
+echo|set /p=%gatestring%
+:loop2
+choice /c 1234567890xdsp >NUL
+set error=%errorlevel%
+if %error%==1 set gatestring=%gatestring%1
+if %error%==2 set gatestring=%gatestring%2
+if %error%==3 set gatestring=%gatestring%3
+if %error%==4 set gatestring=%gatestring%4
+if %error%==5 set gatestring=%gatestring%5
+if %error%==6 set gatestring=%gatestring%6
+if %error%==7 set gatestring=%gatestring%7
+if %error%==8 set gatestring=%gatestring%8
+if %error%==9 set gatestring=%gatestring%9
+if %error%==10 set gatestring=%gatestring%0
+if %error%==11 set gatestring=%gatestring%.
+if %error%==12 if "%gatestring%" NEQ "Enter Gateway:        " set gatestring=%gatestring:~0,-1%
+if %error%==13 goto x2
+if %error%==14 goto carry_on
+cls
+echo.%ipstring%
+echo|set/p=%gatestring%                        
+echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+goto loop2
+:x2
+for /f "tokens=3 delims=: " %%i in ("%gatestring%") do set gate=%%i
+echo %gate%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$" >NUL&&echo. >NUL || echo.no_good&&goto loop2
+echo %gate%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digits in Gate way&goto loop2)
+
+if not defined mask set mask=
+set subnetmask=Enter Subnet mask:    %mask%
+CLS
+echo.%ipstring%
+echo.%gatestring%
+echo|set /p=%subnetmask%
+:loop3
+choice /c 1234567890xdsp >NUL
+set error=%errorlevel%
+if %error%==1 set subnetmask=%subnetmask%1
+if %error%==2 set subnetmask=%subnetmask%2
+if %error%==3 set subnetmask=%subnetmask%3
+if %error%==4 set subnetmask=%subnetmask%4
+if %error%==5 set subnetmask=%subnetmask%5
+if %error%==6 set subnetmask=%subnetmask%6
+if %error%==7 set subnetmask=%subnetmask%7
+if %error%==8 set subnetmask=%subnetmask%8
+if %error%==9 set subnetmask=%subnetmask%9
+if %error%==10 set subnetmask=%subnetmask%0
+if %error%==11 set subnetmask=%subnetmask%.
+if %error%==12 if "%subnetmask%" NEQ "Enter Subnet mask:    " set subnetmask=%subnetmask:~0,-1%
+if %error%==13 goto x3
+if %error%==14 goto carry_on
+cls
+echo.%ipstring%
+echo.%gatestring%
+echo|set/p=%subnetmask%                        
+echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+goto loop3
+:x3
+for /f "tokens=4 delims=: " %%i in ("%subnetmask%") do set subnet=%%i
+echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$" >NUL&&echo. >NUL || echo.no_good&&goto loop3
+echo %subnet%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digits in Ip&goto loop3)
+pause
+goto doit
+goto :EOF
 :string_counter
 setlocal enabledelayedexpansion
 set /a heyhey=100
 set string=%~1
 set /a tount=0
-for /l %%i in (0,1,150) do set temp=!string:~%%i,1!&set /a tount+=1&if "z!temp!z"=="zz" goto nt
+if defined string for /l %%i in (0,1,150) do set temp=!string:~%%i,1!&set /a tount+=1&if "z!temp!z"=="zz" goto nt
 :nt
+if not defined string set /a tount=1
 set /a tount=tount-1
-
 set /a leftover=heyhey-tount
-
 REM White Space Sensitive code
 set space= 
 for /l %%i in (1,1,!leftover!) do set space= !space!
 echo.|set/p=x%string%!space!X
 echo.
-Endlocal
+Endlocal disabledelayedexpansion
 Exit /B
+
+REM the power is in being a man
 REM ~~i am just butt a christian +-~
 REM   butt is the key word here 
 REM The bride and the bridegroom.
