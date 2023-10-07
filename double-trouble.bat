@@ -136,6 +136,9 @@ if "%error%"=="5"  goto carry_on
 goto terminate
 :copied
 echo.&echo.Press a key to copy!&pause >NUL
+set ipthing=
+set gatething=
+set mask=
 if defined ipis for /f "tokens=3" %%i in ("%ipis%") do set ipthing=%%i
 if defined ipis echo.[Copied Ip Address!] %ipthing%&echo.&echo.Hit a Key!&echo.%ipthing%|clip&PAUSE >NUL
 if defined gateis for /f "tokens=3" %%i in ("%gateis%") do set gatething=%%i
@@ -148,8 +151,10 @@ del temps23210948.bat 2>nul
 for /l %%i in (1,1,20) do echo.&echo.&call :choose
 goto :EOF
 :choose
-choice /c yR /m " Try Again?" /N 
+title Try again: Y or N
+choice /c yN /m " Try Again?" /N 
 if %errorlevel%==1 goto copied
+if %errorlevel%==2 goto carry_on
 Exit /B
 
 :dynamicconfiguration
@@ -210,13 +215,14 @@ del xxxxxxxxxx0931092.vbs
 del temps23210948.bat
 goto :EOF
 :editer
-title Press S to Save
+title S = Save [ Press P for menu ]
 if defined ipis for /f "tokens=3" %%i in ("%ipis%") do set ipthing=%%i
 if defined gateis for /f "tokens=3" %%i in ("%gateis%") do set gatething=%%i
 if defined subnetis for /f "tokens=5 delims=() " %%i in ("%subnetis%") do set mask=%%i
 if not defined ipthing set ipthing=
 set ipstring=Enter IP:             %ipthing%
 CLS
+echo.-%template%-
 echo|set /p=%ipstring%
 :loop1
 choice /c 1234567890xdsp >NUL
@@ -236,18 +242,19 @@ if %error%==12 if "%ipstring%" NEQ "Enter IP:             " set ipstring=%ipstri
 if %error%==13 goto x1
 if %error%==14 goto carry_on
 cls
+echo.-%template%-
 echo|set/p=%ipstring%                        
-echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+echo. (x) - add dot .    (d) - delete   
 goto loop1
 :x1
 for /f "tokens=3 delims=: " %%i in ("%ipstring%") do set ip=%%i
-echo x%ip%x
 echo %ip%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*$" >NUL&&echo. >NUL || echo.no_good&&goto loop1
 echo %ip%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digits in Ip&goto loop1)
 
 if not defined gatething set gatething=
 set gatestring=Enter Gateway:        %gatething%
 CLS
+echo.-%template%-
 echo.%ipstring%
 echo|set /p=%gatestring%
 :loop2
@@ -268,9 +275,10 @@ if %error%==12 if "%gatestring%" NEQ "Enter Gateway:        " set gatestring=%ga
 if %error%==13 goto x2
 if %error%==14 goto carry_on
 cls
+echo.-%template%-
 echo.%ipstring%
 echo|set/p=%gatestring%                        
-echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+echo. (x) - add dot .    (d) - delete   
 goto loop2
 :x2
 for /f "tokens=3 delims=: " %%i in ("%gatestring%") do set gate=%%i
@@ -280,6 +288,7 @@ echo %gate%| findstr /r "[0-9][0-9][0-9][0-9][0-9]*" >NUL&&(echo.Excessive Digit
 if not defined mask set mask=
 set subnetmask=Enter Subnet mask:    %mask%
 CLS
+echo.-%template%-
 echo.%ipstring%
 echo.%gatestring%
 echo|set /p=%subnetmask%
@@ -301,10 +310,11 @@ if %error%==12 if "%subnetmask%" NEQ "Enter Subnet mask:    " set subnetmask=%su
 if %error%==13 goto x3
 if %error%==14 goto carry_on
 cls
+echo.-%template%-
 echo.%ipstring%
 echo.%gatestring%
 echo|set/p=%subnetmask%                        
-echo. (x) - add dot .    (d) - delete   (s) - save (p) - quit
+echo. (x) - add dot .    (d) - delete   
 goto loop3
 :x3
 for /f "tokens=4 delims=: " %%i in ("%subnetmask%") do set subnet=%%i
