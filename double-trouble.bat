@@ -6,9 +6,8 @@ REM Remember me.
 goto begin
 :begin
  set colors=
- 
- set /a juggersommer=-1
- set /a gotowhere=0
+
+
 if exist colors-29017739820942.conf title Welcome!
 if exist colors-29017739820942.conf for /f "delims=" %%i in (colors-29017739820942.conf) do set colors=%%i
 color %colors%
