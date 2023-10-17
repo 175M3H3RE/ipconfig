@@ -56,7 +56,7 @@ title Ikea Network Switcher
 CLS
 set /a counter=-1
 
-for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do if %%e NEQ "" echo "%%e"|findstr /r "[%%]"&&echo.Found offensive character %% in Interface name please change name || call :set "%%e"
+for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do if %%e NEQ "" echo "%%e"|findstr /r "[%%]" >NUL&&(echo.&echo..-Bat---Attention--required-!-!---------------------&echo.^|Found offensive character '%%' Interface name      ^|&echo.^|Unable to proceed with this interface due to this.^|&echo.^|offending character, therefore                    ^|&echo.^|please change it's name!                          ^|&echo.----------------------------------------------------&echo.Error Details: Interface Name: [%%e]&echo.&echo.Press Any Key to Open Network Adapter connection...&PAUSE >NUL&ncpa.cpl ) || call :set "%%e"
 goto start
 :set
 set temporary=%1
