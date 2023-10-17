@@ -85,8 +85,6 @@ REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %whatt% LSS 1  echo.No exists&goto choice
 if %whatt%==%total% SET /A SWITCH=0&CALL :themes&goto Carry_on
 if %whatt%==%somebot% start cmd /c "%~fp0"
-CALL echo %%interface[%number_of_desire%]%%
-PAUSE
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
 if %template%=="" echo.No exists&goto choice
 title %template%
@@ -166,7 +164,7 @@ Exit /B
 
 
 
-echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" source=dhcp  > temps23210948.bat
+echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name=%template% source=dhcp  > temps23210948.bat
 echo.netsh -c interface ipv4 set address name=%template% source=dhcp  >> temps23210948.bat
 echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
@@ -196,7 +194,7 @@ echo %subnet%| findstr /r "^[0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]*[.][0-9][0-9]
 echo.Done!
 echo.Setting in motion..&timeout 1 >NUL&echo|set /p=Running as Administrative priveleges...
 
-echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" static %ip% %subnet% %gate% > temps23210948.bat
+echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name=%template% static %ip% %subnet% %gate% > temps23210948.bat
 echo.netsh -c interface ipv4 set address name=%template% static %ip% %subnet% %gate%  >> temps23210948.bat
 echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
