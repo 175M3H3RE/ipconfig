@@ -55,13 +55,14 @@ if NOT exist colors-29017739820942.conf ping -n 2 localhost 1>NUL
 title Ikea Network Switcher
 CLS
 set /a counter=-1
-for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do CALL :set "%%e"
+
+for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do if %%e NEQ "" echo "%%e"|findstr /r "[%%]"&&echo.Found offensive character %% in Interface name please change name || call :set "%%e"
 goto start
 :set
-set temporary="%~1"
-if "%~1"=="" goto india 
+set temporary=%1
+if %1=="" goto india 
 set /a counter+=1
-set interface[%counter%]="%~1"
+set interface[%counter%]=%1
 set /a number=counter+1
 
 CALL set template=%%interface[%counter%]%%
