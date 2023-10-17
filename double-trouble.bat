@@ -55,19 +55,23 @@ if NOT exist colors-29017739820942.conf ping -n 2 localhost 1>NUL
 title Ikea Network Switcher
 CLS
 set /a counter=-1
-for /f "delims=" %%a in ('wmic nic get NetConnectionID /format:list') do for /f "tokens=1,* delims=^=" %%b in ("%%a") do CALL :set "%%c"
+for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do CALL :set "%%e"
 goto start
 :set
-set temporary=%~1
+set temporary="%~1"
 if "%~1"=="" goto india 
 set /a counter+=1
-set interface[%counter%]=%~1
+set interface[%counter%]="%~1"
 set /a number=counter+1
+
 CALL set template=%%interface[%counter%]%%
-if "X%template%X" NEQ "XX" echo %number%.%template%
+
+
+if %template% NEQ "" echo %number%.%template%
 :india
 Exit /B
 :start
+
 set /a total=counter+2
 echo.
 :choice
@@ -81,20 +85,22 @@ REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %whatt% LSS 1  echo.No exists&goto choice
 if %whatt%==%total% SET /A SWITCH=0&CALL :themes&goto Carry_on
 if %whatt%==%somebot% start cmd /c "%~fp0"
+CALL echo %%interface[%number_of_desire%]%%
+PAUSE
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
-if "%template%"=="" echo.No exists&goto choice
+if %template%=="" echo.No exists&goto choice
 title %template%
 CLS
 SET dhcpis=
 set ipis=
 set gateis=
 set subnetis=
-for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:" ') do set dhcpis=%%i
-for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "IP Address:" ') do set ipis=%%i
-for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Default Gateway:" ') do set gateis=%%i
-for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^="%template%" ^| find "Subnet Prefix:" ') do set subnetis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "DHCP enabled:" ') do set dhcpis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "IP Address:" ') do set ipis=%%
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "Default Gateway:" ') do set gateis=%%i
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "Subnet Prefix:" ') do set subnetis=%%i
 
-for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^="%template%" ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
+for /f "tokens=*" %%i in ('netsh  interface ipv4 show addresses name^=%template% ^| find "DHCP enabled:"') do for /f "tokens=3 delims=: " %%a in ("%%i") do set string=x%%ax
 
 
 
@@ -161,7 +167,7 @@ Exit /B
 
 
 echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" source=dhcp  > temps23210948.bat
-echo.netsh -c interface ipv4 set address name="%template%" source=dhcp  >> temps23210948.bat
+echo.netsh -c interface ipv4 set address name=%template% source=dhcp  >> temps23210948.bat
 echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
 if exist temps23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temps23210948.bat') do set file_nameis=%%i
@@ -191,7 +197,7 @@ echo.Done!
 echo.Setting in motion..&timeout 1 >NUL&echo|set /p=Running as Administrative priveleges...
 
 echo mode 80,7 ^&color %colors%^&echo off^&title Running Command..^& cls ^& echo.netsh interface ipv4 set address name="%template%" static %ip% %subnet% %gate% > temps23210948.bat
-echo.netsh -c interface ipv4 set address name="%template%" static %ip% %subnet% %gate%  >> temps23210948.bat
+echo.netsh -c interface ipv4 set address name=%template% static %ip% %subnet% %gate%  >> temps23210948.bat
 echo.echo Errorlevel=%errorlevel% ^& PAUSE >> temps23210948.bat
 
 if exist temps23210948.bat for /f "tokens=*" %%i in ('dir /s /b .\temps23210948.bat') do set file_nameis=%%i
