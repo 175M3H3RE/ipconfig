@@ -248,7 +248,7 @@ if %error%==14 goto carry_on
 cls
 echo.-%template%-
 echo|set/p=%ipstring%                        
-echo. (x) - add dot .    (d) - delete   
+echo. (x) - add dot .    (d) - delete   (s) - next
 goto loop1
 :x1
 for /f "tokens=3 delims=: " %%i in ("%ipstring%") do set ip=%%i
@@ -282,7 +282,7 @@ cls
 echo.-%template%-
 echo.%ipstring%
 echo|set/p=%gatestring%                        
-echo. (x) - add dot .    (d) - delete   
+echo. (x) - add dot .    (d) - delete   (s) - next   
 goto loop2
 :x2
 for /f "tokens=3 delims=: " %%i in ("%gatestring%") do set gate=%%i
@@ -318,7 +318,7 @@ echo.-%template%-
 echo.%ipstring%
 echo.%gatestring%
 echo|set/p=%subnetmask%                        
-echo. (x) - add dot .    (d) - delete   
+echo. (x) - add dot .    (d) - delete   (s) - next  
 goto loop3
 :x3
 for /f "tokens=4 delims=: " %%i in ("%subnetmask%") do set subnet=%%i
