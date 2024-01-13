@@ -95,7 +95,7 @@ set ipis=
 set gateis=
 set subnetis=
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "DHCP enabled:" ') do set dhcpis=%%i
-for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "IP Address:" ') do set ipis=%%
+for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "IP Address:" ') do set ipis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "Default Gateway:" ') do set gateis=%%i
 for /f "delims=" %%i in ('netsh interface ipv4 show addresses name^=%template% ^| find "Subnet Prefix:" ') do set subnetis=%%i
 
