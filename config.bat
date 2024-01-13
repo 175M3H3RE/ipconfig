@@ -1,4 +1,6 @@
 @echo off & title Ikea Network Switcher
+set /a random_gen=(%RANDOM%*1000/32767)+1
+set /a random_gen2=(%RANDOM%*%random_gen%/32767)+1
 REM You ll get What you pay for.
 REM REMember that.
 REM Remember me.
@@ -76,18 +78,21 @@ Exit /B
 set /a total=counter+2
 echo.
 :choice
+set /a somebot=counter+3
+if %RANDOM_GEN2% LSS 20 echo [Tip - Use Secret Codes %total%, %somebot%]
 REM set /p Whatt=_
 choice /c 1234567890 /n /M "?"
 set error_received=%errorlevel%
 if %error_received%==10 (set /a whatt=10 ) else (set /a whatt=%error_received%)
 set /a number_of_desire=whatt-1
-set /a somebot=counter+3
 REM echo %Whatt%| findstr /r "^[0-9]*$" >NUL&&echo. >NUL || goto choice
 if %whatt% LSS 1  echo.No exists&goto choice
 if %whatt%==%total% SET /A SWITCH=0&CALL :themes&goto Carry_on
-if %whatt%==%somebot% start cmd /c "%~fp0"
+if %whatt%==%somebot% start cmd /c "%~fp0"&goto :eof
 if %number_of_desire% GEQ 0 CALL set template=%%interface[%number_of_desire%]%%
-if %template%=="" echo.No exists&goto choice
+if %number_of_desire% GEQ %somebot% echo.No exists&goto choice
+if %number_of_desire% LSS 0 echo.No exists&goto choice
+
 title %template%
 CLS
 SET dhcpis=
