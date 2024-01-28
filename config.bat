@@ -38,6 +38,8 @@ set colors=!color1!!colorlist!!color2!!colorlist!!color3!!colorlist!!color4!
 for /f "delims=" %%i in ("!colors!") do CALL :colorit %%i
 if %switch% NEQ 1 goto themes
 if %switch%==1 Endlocal&Exit /B
+Endlocal
+Exit /b
 :colorit
 if %switch%==1 goto skip
 set colos=%~1
@@ -50,15 +52,15 @@ if %errorology%==3 set /a switch=1
 :skip
 Exit /B
 :carry_on
-echo. Welcome...
+echo Welcome...
 ping -n 1 localhost 1>NUL
-if NOT exist colors-29017739820942.conf echo. Don't Freak Out I feel for (all of) ya.
-if NOT exist colors-29017739820942.conf ping -n 2 localhost 1>NUL
+if NOT exist colors-29017739820942.conf echo Don't Freak Out I feel for ^(all of^)  ya.
+if NOT exist colors-29017739820942.conf  ping -n 2 localhost 1>NUL 
 title Ikea Network Switcher
 CLS
 set /a counter=-1
 
-for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do if %%e NEQ "" echo "%%e"|findstr /r "[%%]" >NUL&&(echo.&echo..-Bat---Attention--required-!-!---------------------&echo.^|Found offensive character '%%' Interface name      ^|&echo.^|Unable to proceed with this interface due to this.^|&echo.^|offending character, therefore                    ^|&echo.^|please change it's name!                          ^|&echo.----------------------------------------------------&echo.Error Details: Interface Name: [%%e]&echo.&echo.Press Any Key to Open Network Adapter connection...&PAUSE >NUL&ncpa.cpl ) || call :set "%%e"
+for /f "skip=3 delims=" %%a in ('netsh interface show interface') do for /f "tokens=1,2,3*" %%b in ("%%a") do if %%e NEQ "" echo "%%e"|findstr /r "[%%]" >NUL&&(echo &echo .-Bat---Attention--required-!-!---------------------&echo ^|Found offensive character '%%' Interface name      ^|&echo ^|Unable to proceed with this interface due to this.^|&echo ^|offending character, therefore                    ^|&echo ^|please change it's name!                          ^|&echo ----------------------------------------------------&echo Error Details: Interface Name: [%%e]&echo &echo Press Any Key to Open Network Adapter connection...&PAUSE >NUL&ncpa.cpl ) || call :set "%%e"
 goto start
 :set
 set temporary=%1
@@ -76,7 +78,7 @@ Exit /B
 :start
 
 set /a total=counter+2
-echo.
+echo .
 :choice
 set /a somebot=counter+3
 if %RANDOM_GEN2% LSS 20 echo [Tip - Use Secret Codes %total%, %somebot%]
